@@ -1,0 +1,21 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jsonwebtoken": "^9.0.2",
+    "mv": "^2.1.1",
+    "mysql": "^2.18.1",
+    "node-fetch": "^2.7.0",
+    "node-schema-object": "^3.3.4",
+    "recursive-readdir": "^2.2.3",
+    "restify": "^11.1.0",
+    "restify-eventsource": "^2.0.0"
+  }
+}
