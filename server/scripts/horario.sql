@@ -10,7 +10,7 @@ SELECT
 FROM
     horario
 WHERE
-    idempresa = 3 
+    idempresa = 1 
 
 --END#obterHorarios#
 
