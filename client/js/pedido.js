@@ -319,7 +319,7 @@ pedido.method = {
 
         var texto = 'Olá! gostaria de saber sobre o meu pedido: Nº ' + idpedido;
 
-        var numero = 'NUMERO' // com codigo e ddd: 5517999999999
+        var numero = '77991480877' // com codigo e ddd: 5517999999999
 
         // criar a URL
         let encode = encodeURI(texto);
