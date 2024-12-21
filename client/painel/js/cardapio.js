@@ -1475,6 +1475,16 @@ cardapio.template = {
                     <i class="fas fa-trash-alt"></i>
                 </a>
             </div>
+
+            <div class="col-12">
+                <div class="form-group">
+                    <p class="title-categoria mb-0 mt-4"><b>Descrição:</b></p>
+                    <input id="txtDescricaoSimples-123" type="text" class="form-control" placeholder="mussarela, presunto, palmito, ovo, ervilha e cebola" />
+                </div>
+            </div>
+
+            <div class="separate mt-4"></div>
+
         </div>
     `
 
