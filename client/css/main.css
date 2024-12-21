@@ -353,10 +353,14 @@ section.categoria {
 
 .infos-produto-opcional {
     flex: 1;
+    font-size: 14px;
+}
+
+.name-price-info-opcional {
     display: flex;
-    justify-content: space-between;
     font-size: 14px;
     align-items: center;
+    justify-content: space-between;
 }
 
 .infos-produto-opcional .name, .infos-produto-opcional .price {

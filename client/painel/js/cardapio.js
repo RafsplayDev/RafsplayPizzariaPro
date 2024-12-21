@@ -1418,8 +1418,11 @@ cardapio.template = {
     opcionalItem: `
         <div class="card card-opcionais mt-2">
             <div class="infos-produto-opcional">
-                <p class="name mb-0"><b>\${nome}</b></p>
-                <p class="price mb-0"><b>\${valor}</b></p>
+                <div class="name-price-info-opcional">
+                    <p class="name mb-0"><b>\${nome}</b></p>
+                    <p class="price mb-0"><b>\${valor}</b></p>
+                </div>
+                <p class="description mb-0">mussarela, presunto, palmito, ovo, ervilha e cebola</p>
             </div>
             <div class="checks">
                 <div class="actions">
@@ -1434,8 +1437,11 @@ cardapio.template = {
     opcionalItemSimples: `
         <div class="card card-opcionais mt-2">
             <div class="infos-produto-opcional">
-                <p class="name mb-0"><b>\${nome}</b></p>
-                <p class="price mb-0"><b>\${valor}</b></p>
+                <div class="name-price-info-opcional">
+                    <p class="name mb-0"><b>\${nome}</b></p>
+                    <p class="price mb-0"><b>\${valor}</b></p>
+                </div>
+                <p class="description mb-0">mussarela, presunto, palmito, ovo, ervilha e cebola</p>
             </div>
             <div class="checks">
                  <div class="actions">
