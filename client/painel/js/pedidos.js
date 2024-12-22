@@ -340,7 +340,8 @@ pedido.method = {
                     var _opc = {
                         idopcionalitem: e.idopcionalitem,
                         nomeopcional: e.nomeopcional,
-                        valoropcional: e.valoropcional
+                        valoropcional: e.valoropcional,
+                        dscopcional: e.dscopcional
                     }
 
                     // adiciona o opcional na lista

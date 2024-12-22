@@ -179,6 +179,7 @@ item.method = {
                     itens += item.template.opcionalItem.replace(/\${idopcionalitem}/g, element.idopcionalitem)
                         .replace(/\${nome}/g, element.nomeopcional)
                         .replace(/\${valor}/g, valor)
+                        .replace(/\${dscopcional}/g, element.dscopcional)
                         .replace(/\${idopcional}/g, e[0])
                     
                 }
@@ -220,6 +221,7 @@ item.method = {
                 let temp = item.template.opcionalItemSimples.replace(/\${idopcionalitem}/g, e.idopcionalitem)
                     .replace(/\${nome}/g, e.nomeopcional)
                     .replace(/\${valor}/g, valor)
+                    .replace(/\${dscopcional}/g, e.dscopcional)
 
                 document.querySelector('#listaOpcionaisSimples').innerHTML += temp;
 
@@ -504,7 +506,7 @@ item.template = {
                     <p class="name mb-0"><b>\${nome}</b></p>
                     <p class="price mb-0"><b>\${valor}</b></p>
                 </div>
-                <p class="description mb-0">mussarela, presunto, palmito, ovo, ervilha e cebola</p>
+                <p class="description mb-0">\${dscopcional}</p>
             </div>
             <div class="checks">
                 <label class="container-check">
@@ -522,7 +524,7 @@ item.template = {
                     <p class="name mb-0"><b>\${nome}</b></p>
                     <p class="price mb-0"><b>\${valor}</b></p>
                 </div>
-                <p class="description mb-0">mussarela, presunto, palmito, ovo, ervilha e cebola</p>
+                <p class="description mb-0">\${dscopcional}</p>
             </div>
             <div class="checks">
                 <label class="container-check">

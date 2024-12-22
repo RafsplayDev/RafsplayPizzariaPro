@@ -72,6 +72,7 @@ SELECT
     , op.idopcionalitem
     , op.nome AS nomeopcional
     , op.valor AS valoropcional
+    , op.descricao AS dscopcional
 FROM
 	pedidoitem AS pi
     JOIN produto AS p ON p.idproduto = pi.idproduto

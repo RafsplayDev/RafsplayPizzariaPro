@@ -9,6 +9,7 @@ SELECT
     , o.maximo
     , oi.nome AS nomeopcional
     , oi.valor AS valoropcional
+    , oi.descricao AS dscopcional
 FROM
 	produtoopcional AS po
     JOIN opcional AS o ON o.idopcional = po.idopcional
@@ -58,9 +59,9 @@ VALUES
 --INIT#adicionarOpcionalItem#
 
 INSERT INTO opcionalitem
-(idopcional, nome, valor)
+(idopcional, nome, valor, descricao)
 VALUES
-(@idopcional, @nome, @valor)
+(@idopcional, @nome, @valor, @descricao)
 
 --END#adicionarOpcionalItem#
 

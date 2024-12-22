@@ -934,6 +934,7 @@ cardapio.method = {
                     itens += cardapio.template.opcionalItem.replace(/\${idopcionalitem}/g, element.idopcionalitem)
                         .replace(/\${nome}/g, element.nomeopcional)
                         .replace(/\${valor}/g, valor)
+                        .replace(/\${dscopcional}/g, element.dscopcional)
                         .replace(/\${idopcional}/g, e[0])
                     
                 }
@@ -976,6 +977,7 @@ cardapio.method = {
                 let temp = cardapio.template.opcionalItemSimples.replace(/\${idopcionalitem}/g, e.idopcionalitem)
                     .replace(/\${nome}/g, e.nomeopcional)
                     .replace(/\${valor}/g, valor)
+                    .replace(/\${dscopcional}/g, e.dscopcional)
 
                 $("#listaOpcionaisSimples").append(temp);
 
@@ -1046,6 +1048,7 @@ cardapio.method = {
 
         $("#txtNomeSimples").val('');
         $("#txtPrecoSimples").val('');
+        $("#txtDescricaoSimples").val('');
 
         $("#txtTituloSecao").val('Deseja borda recheada?');
         $("#txtMinimoOpcao").val(0)
@@ -1074,6 +1077,7 @@ cardapio.method = {
 
             let nomesimples = $("#txtNomeSimples").val().trim();
             let precosimples = parseFloat($("#txtPrecoSimples").val().replace(/\./g, '').replace(',', '.'));
+            let descricaosimples = $("#txtDescricaoSimples").val().trim();
 
             if (nomesimples.length <= 0) {
                 app.method.mensagem('Informe o nome do opcional, por favor.');
@@ -1088,6 +1092,7 @@ cardapio.method = {
             var dados = {
                 nome: nomesimples,
                 valor: precosimples,
+                descricao: descricaosimples,
                 simples: true,
                 idproduto: PRODUTO_ID
             }
@@ -1129,6 +1134,7 @@ cardapio.method = {
 
                 let nomesimples = $("#txtNomeSimples-" + _id).val().trim();
                 let precosimples = parseFloat($("#txtPrecoSimples-" + _id).val().replace(/\./g, '').replace(',', '.'));
+                let descricaosimples = $("#txtDescricaoSimples-" + _id).val().trim();
 
                 if (nomesimples.length <= 0) {
                     continuar = false;
@@ -1140,7 +1146,8 @@ cardapio.method = {
 
                 _opcoes.push({
                     nome: nomesimples,
-                    valor: precosimples
+                    valor: precosimples,
+                    descricao: descricaosimples
                 })
 
             })
@@ -1422,7 +1429,7 @@ cardapio.template = {
                     <p class="name mb-0"><b>\${nome}</b></p>
                     <p class="price mb-0"><b>\${valor}</b></p>
                 </div>
-                <p class="description mb-0">mussarela, presunto, palmito, ovo, ervilha e cebola</p>
+                <p class="description mb-0">\${dscopcional}</p>
             </div>
             <div class="checks">
                 <div class="actions">
@@ -1441,7 +1448,7 @@ cardapio.template = {
                     <p class="name mb-0"><b>\${nome}</b></p>
                     <p class="price mb-0"><b>\${valor}</b></p>
                 </div>
-                <p class="description mb-0">mussarela, presunto, palmito, ovo, ervilha e cebola</p>
+                <p class="description mb-0">\${dscopcional}</p>
             </div>
             <div class="checks">
                  <div class="actions">
@@ -1485,7 +1492,7 @@ cardapio.template = {
             <div class="col-12">
                 <div class="form-group">
                     <p class="title-categoria mb-0 mt-4"><b>Descrição:</b></p>
-                    <input id="txtDescricaoSimples-123" type="text" class="form-control" placeholder="mussarela, presunto, palmito, ovo, ervilha e cebola" />
+                    <input id="txtDescricaoSimples-\${id}" type="text" class="form-control" placeholder="Descrição" />
                 </div>
             </div>
 
