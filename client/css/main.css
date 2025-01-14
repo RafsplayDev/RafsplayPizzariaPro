@@ -789,6 +789,7 @@ textarea {
 }
 
 .inativo {
+    opacity: 0.5;
     text-decoration: line-through;
     color: var(--color-text-out)!important; /* Para indicar visualmente que está inativo */
 }

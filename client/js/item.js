@@ -171,6 +171,16 @@ item.method = {
                     let element = opcional[index];
 
                     let valor = '';
+                    let isInativo = element.ativo === 0 ? 'inativo' : '';
+                    let ativo = element.ativo === 1 ? '' : 'disabled';
+                    let checkboxHTML = element.ativo === 1 ? `
+                        <div class="checks">
+                            <label class="container-check">
+                                <input id="check-opcional-${element.idopcionalitem}" type="checkbox" class="paiopcional-${e[0]}" onchange="item.method.selecionarOpcional('${element.idopcionalitem}', ${e[0]})" ${ativo}/>
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                    ` : '';
 
                     if (element.valoropcional > 0) {
                         valor = `+ R$ ${(element.valoropcional).toFixed(2).replace('.', ',')}`;
@@ -181,6 +191,9 @@ item.method = {
                         .replace(/\${valor}/g, valor)
                         .replace(/\${dscopcional}/g, element.dscopcional)
                         .replace(/\${idopcional}/g, e[0])
+                        .replace(/\${isInativo}/g, isInativo)
+                        .replace(/\${ativo}/g, ativo)
+                        .replace(/\${checkboxHTML}/g, checkboxHTML)
                     
                 }
 
@@ -526,17 +539,13 @@ item.template = {
         <div class="card card-opcionais mt-2">
             <div class="infos-produto-opcional">
                 <div class="name-price-info-opcional">
-                    <p class="name mb-0"><b>\${nome}</b></p>
-                    <p class="price mb-0"><b>\${valor}</b></p>
+                    <p class="name mb-0 \${isInativo}"><b>\${nome}</b></p>
+                    <p class="price mb-0 \${isInativo}"><b>\${valor}</b></p>
                 </div>
-                <p class="description mb-0">\${dscopcional}</p>
+                <!-- Apenas descrição -->
+                <p class="description mb-0 \${isInativo}">\${dscopcional}</p>
             </div>
-            <div class="checks">
-                <label class="container-check">
-                    <input id="check-opcional-\${idopcionalitem}" type="checkbox" class="paiopcional-\${idopcional}" onchange="item.method.selecionarOpcional('\${idopcionalitem}', \${idopcional})" />
-                    <span class="checkmark"></span>
-                </label>
-            </div>
+            \${checkboxHTML}
         </div>
     `,
 
@@ -545,13 +554,13 @@ item.template = {
             <div class="infos-produto-opcional">
                 <div class="name-price-info-opcional">
                     <p class="name mb-0 \${isInativo}"><b>\${nome}</b></p>
-                    <p class="price mb-0"><b>\${valor}</b></p>
+                    <p class="price mb-0 \${isInativo}"><b>\${valor}</b></p>
                 </div>
-                <p class="description mb-0">\${dscopcional}</p>
+                <p class="description mb-0 \${isInativo}">\${dscopcional}</p>
             </div>
             <div class="checks">
                 <label class="container-check">
-                    <input id="check-opcional-\${idopcionalitem}" type="checkbox" \${isDisabled} onchange="item.method.selecionarOpcionalSimples('\${idopcionalitem}')" />
+                    <input id="check-opcional-\${idopcionalitem}" type="checkbox" \${ativo} onchange="item.method.selecionarOpcionalSimples('\${idopcionalitem}')" />
                     <span class="checkmark"></span>
                 </label>
             </div>

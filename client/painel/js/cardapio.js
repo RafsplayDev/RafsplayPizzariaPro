@@ -926,6 +926,8 @@ cardapio.method = {
                     let element = opcional[index];
 
                     let valor = '';
+                    let isInativo = element.ativo === 0 ? 'inativo' : '';
+                    let checked = element.ativo === 1 ? 'checked' : '';
 
                     if (element.valoropcional > 0) {
                         valor = `+ R$ ${(element.valoropcional).toFixed(2).replace('.', ',')}`;
@@ -936,6 +938,8 @@ cardapio.method = {
                         .replace(/\${valor}/g, valor)
                         .replace(/\${dscopcional}/g, element.dscopcional)
                         .replace(/\${idopcional}/g, e[0])
+                        .replace(/\${checked}/g, checked)
+                        .replace(/\${isInativo}/g, isInativo)
                     
                 }
 
@@ -1323,42 +1327,79 @@ cardapio.method = {
 
     },
 
-    desabilitarOpcional: (idopcionalitem) => {
-
-        let checkbox = document.querySelector("#chkEditarOpcional").checked;
-    
-        if (checkbox) {
-            document.querySelector("#chkEditarOpcional").checked = true;
-        } else {
-            document.querySelector("#chkEditarOpcional").checked = false;
+    desabilitarOpcional: (idopcionalitem, isSimples = false) => {
+        // Pega o checkbox específico pelo ID
+        let checkboxId = isSimples ? "chkEditarOpcional" : `chkEditarOpcional-${idopcionalitem}`;
+        let checkbox = document.querySelector(`#${checkboxId}`);
+        
+        if (!checkbox) {
+            console.error('Checkbox não encontrado');
+            return;
         }
-    
-        cardapio.method.salvarOpcaoDesabilitarOpcional(idopcionalitem, checkbox);
+        
+        let ativar = checkbox.checked;
+        cardapio.method.salvarOpcaoDesabilitarOpcional(idopcionalitem, ativar);
     },
     
     salvarOpcaoDesabilitarOpcional: (idopcionalitem, ativar) => {
-
         app.method.loading(true);
-    
+
         var dados = {
             idopcionalitem: idopcionalitem,
             ativar: ativar ? 1 : 0
         };
-    
+
+        // Atualiza o visual imediatamente
+        const opcional = document.querySelector(`#chkEditarOpcional-${idopcionalitem}`)?.closest('.card-opcionais');
+        const opcionalSimples = document.querySelector(`#chkEditarOpcional`)?.closest('.card-opcionais');
+        const elementoOpcional = opcional || opcionalSimples;
+
+        if (elementoOpcional) {
+            const textos = elementoOpcional.querySelectorAll('.name, .description');  // Removido .price
+            textos.forEach(texto => {
+                if (!ativar) {
+                    texto.classList.add('inativo');
+                } else {
+                    texto.classList.remove('inativo');
+                }
+            });
+        }
+
         app.method.post('/opcional/item/desabilitar', JSON.stringify(dados),
             (response) => {
                 console.log(response);
-    
                 app.method.loading(false);
-    
+
                 if (response.status === 'error') {
+                    // Se houver erro, reverte o visual
+                    if (elementoOpcional) {
+                        const textos = elementoOpcional.querySelectorAll('.name, .description');  // Removido .price
+                        textos.forEach(texto => {
+                            if (ativar) {
+                                texto.classList.add('inativo');
+                            } else {
+                                texto.classList.remove('inativo');
+                            }
+                        });
+                    }
                     app.method.mensagem(response.message);
                     return;
                 }
-    
+
                 app.method.mensagem(response.message, 'green');
             },
             (error) => {
+                // Se houver erro, reverte o visual
+                if (elementoOpcional) {
+                    const textos = elementoOpcional.querySelectorAll('.name, .description');  // Removido .price
+                    textos.forEach(texto => {
+                        if (ativar) {
+                            texto.classList.add('inativo');
+                        } else {
+                            texto.classList.remove('inativo');
+                        }
+                    });
+                }
                 app.method.loading(false);
                 console.log('error', error);
             }
@@ -1469,12 +1510,16 @@ cardapio.template = {
 
     opcionalItem: `
         <div class="card card-opcionais mt-2">
+            <label class="container-check mb-0 mt-2 me-3" onchange="cardapio.method.desabilitarOpcional('\${idopcionalitem}')">
+                <input type="checkbox" id="chkEditarOpcional-\${idopcionalitem}" \${checked}>
+                <span class="checkmark"></span>
+            </label>
             <div class="infos-produto-opcional">
                 <div class="name-price-info-opcional">
-                    <p class="name mb-0"><b>\${nome}</b></p>
+                    <p class="name mb-0 \${isInativo}"><b>\${nome}</b></p>
                     <p class="price mb-0"><b>\${valor}</b></p>
                 </div>
-                <p class="description mb-0">\${dscopcional}</p>
+                <p class="description mb-0 \${isInativo}">\${dscopcional}</p>
             </div>
             <div class="checks">
                 <div class="actions">
@@ -1488,19 +1533,19 @@ cardapio.template = {
 
     opcionalItemSimples: `
         <div class="card card-opcionais mt-2">
-            <label class="container-check mb-0 mt-2 me-3" onchange="cardapio.method.desabilitarOpcional('\${idopcionalitem}')">
+            <label class="container-check mb-0 mt-2 me-3" onchange="cardapio.method.desabilitarOpcional('\${idopcionalitem}', true)">
                 <input type="checkbox" id="chkEditarOpcional" \${checked}>
                 <span class="checkmark"></span>
             </label>
             <div class="infos-produto-opcional">
                 <div class="name-price-info-opcional">
-                    <p class="name mb-0"><b>\${nome}</b></p>
+                    <p class="name mb-0 \${isInativo}"><b>\${nome}</b></p>
                     <p class="price mb-0"><b>\${valor}</b></p>
                 </div>
-                <p class="description mb-0">\${dscopcional}</p>
+                <p class="description mb-0 \${isInativo}">\${dscopcional}</p>
             </div>
             <div class="checks">
-                 <div class="actions">
+                <div class="actions">
                     <a href="#!" class="icon-action" data-toggle="tooltip" data-placement="top" title="Remover" onclick="cardapio.method.abrirModalRemoverOpcionalItem('\${idopcionalitem}')" data-bs-original-title="Remover">
                         <i class="fas fa-trash-alt"></i>
                     </a>
