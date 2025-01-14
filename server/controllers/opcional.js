@@ -182,10 +182,34 @@ const controllers = () => {
         
     }
 
+    const desabilitarOpcionalItem = async (req) => {
+        try {
+
+            const idopcionalitem = req.body.idopcionalitem;
+            const ativo = req.body.ativar;
+    
+            let ComandoSQL = await readCommandSql.restornaStringSql('desabilitarOpcionalItem', 'opcional');
+            result = await db.Query(ComandoSQL, { idopcionalitem: idopcionalitem, ativo: ativo });
+            
+            return {
+                status: 'success',
+                message: "Opcional atualizado com sucesso."
+            };
+    
+        } catch (ex) {
+            console.log(ex);
+            return {
+                status: 'error',
+                message: 'Falha ao atualizar opcional.'
+            };
+        }
+    }
+
     return Object.create({
         obterOpcionaisProduto
         , removerOpcionalItem
         , salvarOpcionaisProduto
+        , desabilitarOpcionalItem
     })
 
 }

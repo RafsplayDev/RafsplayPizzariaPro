@@ -65,7 +65,7 @@
 .menu-item {
     display: block;
     padding: 15px 30px;
-    color: var(--color-black) !important;
+    color: var(--color-white) !important;
     text-decoration: none !important;
 }
 
@@ -76,6 +76,7 @@
 }
 
 .menu-item.active {
+    color: var(--color-black)!important;
     background-color: var(--color-background);
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
@@ -165,6 +166,7 @@ h1.title-page {
 .badge-total-pedidos {
     display: inline-block;
     background-color: var(--color-primary-out);
+    color: var(--color-white);
     border-radius: 50px;
     font-size: 14px;
     width: 25px;
@@ -244,6 +246,15 @@ h1.title-page {
 
 .card-pedido:hover {
     background-color: var(--color-secondary);
+    color: var(--color-white);
+}
+
+.card-pedido:hover .info-pedido{
+    color: var(--color-white);
+}
+
+.card-pedido:hover span{
+    color: var(--color-text-out);
 }
 
 .card-pedido:hover::before, .card-pedido:hover::after {
@@ -398,6 +409,7 @@ h1.title-page {
 
 .icon-action:hover {
     background-color: var(--color-secondary);
+    color: var(--color-primary)!important;
 }
 
 .title-produtos {
@@ -430,7 +442,7 @@ h1.title-page {
     margin-left: 19px;
     font-size: 12px;
     background-color: var(--color-primary);
-    color: var(--color-black);
+    color: var(--color-white);
     width: 20px;
     height: 20px;
     border-radius: 50px;

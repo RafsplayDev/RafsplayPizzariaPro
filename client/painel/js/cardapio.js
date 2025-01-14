@@ -970,6 +970,8 @@ cardapio.method = {
 
                 let valor = '';
 
+                let checked = e.ativo === 1 ? 'checked' : '';
+
                 if (e.valoropcional > 0) {
                     valor = `+ R$ ${(e.valoropcional).toFixed(2).replace('.', ',')}`;
                 }
@@ -978,6 +980,7 @@ cardapio.method = {
                     .replace(/\${nome}/g, e.nomeopcional)
                     .replace(/\${valor}/g, valor)
                     .replace(/\${dscopcional}/g, e.dscopcional)
+                    .replace(/\${checked}/g, checked)
 
                 $("#listaOpcionaisSimples").append(temp);
 
@@ -1320,6 +1323,48 @@ cardapio.method = {
 
     },
 
+    desabilitarOpcional: (idopcionalitem) => {
+
+        let checkbox = document.querySelector("#chkEditarOpcional").checked;
+    
+        if (checkbox) {
+            document.querySelector("#chkEditarOpcional").checked = true;
+        } else {
+            document.querySelector("#chkEditarOpcional").checked = false;
+        }
+    
+        cardapio.method.salvarOpcaoDesabilitarOpcional(idopcionalitem, checkbox);
+    },
+    
+    salvarOpcaoDesabilitarOpcional: (idopcionalitem, ativar) => {
+
+        app.method.loading(true);
+    
+        var dados = {
+            idopcionalitem: idopcionalitem,
+            ativar: ativar ? 1 : 0
+        };
+    
+        app.method.post('/opcional/item/desabilitar', JSON.stringify(dados),
+            (response) => {
+                console.log(response);
+    
+                app.method.loading(false);
+    
+                if (response.status === 'error') {
+                    app.method.mensagem(response.message);
+                    return;
+                }
+    
+                app.method.mensagem(response.message, 'green');
+            },
+            (error) => {
+                app.method.loading(false);
+                console.log('error', error);
+            }
+        );
+    },
+
 
 }
 
@@ -1443,6 +1488,10 @@ cardapio.template = {
 
     opcionalItemSimples: `
         <div class="card card-opcionais mt-2">
+            <label class="container-check mb-0 mt-2 me-3" onchange="cardapio.method.desabilitarOpcional('\${idopcionalitem}')">
+                <input type="checkbox" id="chkEditarOpcional" \${checked}>
+                <span class="checkmark"></span>
+            </label>
             <div class="infos-produto-opcional">
                 <div class="name-price-info-opcional">
                     <p class="name mb-0"><b>\${nome}</b></p>

@@ -13,9 +13,9 @@
     --color-black: #212121;
     --color-text: #4f4f4f;
     --color-text-out: #90908e;
-    --color-primary: #ffbf00;
-    --color-primary-out: #ffda6f;
-    --color-secondary: #fff2cc;
+    --color-primary: #ba8333;
+    --color-primary-out: #3a3a3a;
+    --color-secondary: #1c1c1c;
     --color-white: #ffffff;
     --color-red: #e74c3c;
     --color-green: #2ecc71;
@@ -184,7 +184,7 @@ section.categoria {
 .btn-yellow {
     border: none!important;
     background-color: var(--color-primary);
-    color: var(--color-black)!important;
+    color: var(--color-white)!important;
     border-radius: 20px;
     padding: 15px 25px;
     font-size: 20px;
@@ -209,6 +209,7 @@ section.categoria {
 
 .btn-white:hover, .btn-white.active {
     background-color: var(--color-primary);
+    color: var(--color-white);
 }
 
 .title-categoria {
@@ -296,7 +297,7 @@ section.categoria {
     width: 21px;
     height: 21px;
     background-color: var(--color-primary);
-    color: var(--color-black);
+    color: var(--color-white);
     border-radius: 50px;
     font-size: 12px;
     font-weight: bold;
@@ -372,7 +373,7 @@ section.categoria {
     background-color: var(--color-secondary);
     padding: 7px 12px;
     border-radius: 50px;
-    color: var(--color-black);
+    color: var(--color-white);
     margin-top: 5px;
 }
 
@@ -632,7 +633,7 @@ textarea {
     width: 50px;
     height: 50px;
     background-color: var(--color-secondary);
-    color: var(--color-black);
+    color: var(--color-primary);    
     font-size: 22px;
     border-radius: 11px;
     display: flex;
@@ -787,4 +788,17 @@ textarea {
     color: var(--color-red);
 }
 
+.inativo {
+    text-decoration: line-through;
+    color: var(--color-text-out)!important; /* Para indicar visualmente que está inativo */
+}
+
+.price.inativo {
+    display: none;
+}
+
+input[disabled] {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
 

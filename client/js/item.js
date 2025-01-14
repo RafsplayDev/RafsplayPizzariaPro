@@ -201,38 +201,61 @@ item.method = {
     },
 
     carregarOpcionaisSimples: (lista) => {
-
-        let listaSimples = lista.filter((elem) => { return elem.tiposimples == 1 });
-
-        document.querySelector('#listaOpcionaisSimples').innerHTML = '';
-
+        // Filtra apenas os opcionais simples
+        let listaSimples = lista.filter((elem) => elem.tiposimples == 1);
+    
+        // Seleciona o contêiner onde os opcionais serão exibidos
+        const listaOpcionaisSimples = document.querySelector('#listaOpcionaisSimples');
+        listaOpcionaisSimples.innerHTML = ''; // Limpa o conteúdo anterior
+    
         if (listaSimples.length > 0) {
-
+            // Torna o contêiner visível
             document.querySelector('#containerOpcionaisSimples').classList.remove('hidden');
-
-            listaSimples.forEach((e, i) => {
-
-                let valor = '';
-
-                if (e.valoropcional > 0) {
-                    valor = `+ R$ ${(e.valoropcional).toFixed(2).replace('.', ',')}`;
-                }
-
-                let temp = item.template.opcionalItemSimples.replace(/\${idopcionalitem}/g, e.idopcionalitem)
-                    .replace(/\${nome}/g, e.nomeopcional)
-                    .replace(/\${valor}/g, valor)
-                    .replace(/\${dscopcional}/g, e.dscopcional)
-
-                document.querySelector('#listaOpcionaisSimples').innerHTML += temp;
-
-            })
-
+    
+            // Itera sobre os opcionais para montar o HTML
+            listaSimples.forEach((e) => {
+                let valor = e.valoropcional > 0 ? `+ R$ ${e.valoropcional.toFixed(2).replace('.', ',')}` : '';
+    
+                // Determina o estado do item (ativo ou inativo)
+                const isInativo = e.ativo === 0 ? 'inativo' : '';
+                const checkboxHTML = e.ativo === 1
+                    ? `
+                        <div class="checks">
+                            <label class="container-check">
+                                <input id="check-opcional-${e.idopcionalitem}" type="checkbox" onchange="item.method.selecionarOpcionalSimples('${e.idopcionalitem}')">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                    `
+                    : '';
+    
+                // Cria o HTML do item
+                const temp = `
+                    <div class="card card-opcionais mt-2">
+                        <div class="infos-produto-opcional">
+                            <!-- Nome e preço -->
+                            <div class="name-price-info-opcional">
+                                <p class="name mb-0 ${isInativo}"><b>${e.nomeopcional}</b></p>
+                                <p class="price mb-0 ${isInativo}"><b>${valor}</b></p>
+                            </div>
+                            
+                            <!-- Apenas descrição -->
+                            ${e.dscopcional ? `<p class="description mt-1 mb-0 ${isInativo}">${e.dscopcional}</p>` : ''}
+                        </div>
+    
+                        <!-- Checkbox (se ativo) -->
+                        ${checkboxHTML}
+                    </div>
+                `;
+    
+                // Adiciona o HTML ao contêiner
+                listaOpcionaisSimples.innerHTML += temp;
+            });
+        } else {
+            // Remove o contêiner se não houver opcionais simples
+            document.querySelector('#containerOpcionaisSimples').classList.add('hidden');
         }
-        else {
-            document.querySelector('#containerOpcionaisSimples').remove();
-        }
-
-    },
+    },    
 
     // seleciona o opcional
     selecionarOpcional: (idopcionalitem, idopcional) => {
@@ -521,14 +544,14 @@ item.template = {
         <div class="card card-opcionais mt-2">
             <div class="infos-produto-opcional">
                 <div class="name-price-info-opcional">
-                    <p class="name mb-0"><b>\${nome}</b></p>
+                    <p class="name mb-0 \${isInativo}"><b>\${nome}</b></p>
                     <p class="price mb-0"><b>\${valor}</b></p>
                 </div>
                 <p class="description mb-0">\${dscopcional}</p>
             </div>
             <div class="checks">
                 <label class="container-check">
-                    <input id="check-opcional-\${idopcionalitem}" type="checkbox" onchange="item.method.selecionarOpcionalSimples('\${idopcionalitem}')" />
+                    <input id="check-opcional-\${idopcionalitem}" type="checkbox" \${isDisabled} onchange="item.method.selecionarOpcionalSimples('\${idopcionalitem}')" />
                     <span class="checkmark"></span>
                 </label>
             </div>

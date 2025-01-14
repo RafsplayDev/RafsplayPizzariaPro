@@ -19,4 +19,8 @@ module.exports = (server) => {
         res.send(result);
     })
 
+    server.post('/opcional/item/desabilitar', Acesso.verificaTokenAcesso, async (req, res) => {
+        const result = await ct.controllers().desabilitarOpcionalItem(req);
+        res.send(result);
+    });
 }
