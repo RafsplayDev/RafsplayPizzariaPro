@@ -284,21 +284,23 @@ pedido.method = {
             document.querySelector('#container-endereco').classList.add('hidden');
         }
 
+        // carrega o botão de Imprimir
+        document.querySelector('#container-action-footer').innerHTML = '<button onclick="pedido.method.imprimir()" type="button" class="btn btn-white btn-sm">Imprimir</button>';
 
         // carrega o botão final na modal (somente se for diferente de concluido ou recusado)
         if (data.idpedidostatus != 5 && data.idpedidostatus != 6) {
 
             if (data.idpedidostatus == 1) {
-                document.querySelector('#container-action-footer').innerHTML = `<button onclick="pedido.method.moverPara(2, '${idpedido}')" type="button" class="btn btn-yellow btn-sm">Aceitar Pedido</button>`
+                document.querySelector('#container-action-footer').innerHTML += `<button onclick="pedido.method.moverPara(2, '${idpedido}')" type="button" class="btn btn-yellow btn-sm">Aceitar Pedido</button>`
             }
             if (data.idpedidostatus == 2) {
-                document.querySelector('#container-action-footer').innerHTML = `<button onclick="pedido.method.moverPara(3, '${idpedido}')" type="button" class="btn btn-yellow btn-sm">Preparar Pedido</button>`
+                document.querySelector('#container-action-footer').innerHTML += `<button onclick="pedido.method.moverPara(3, '${idpedido}')" type="button" class="btn btn-yellow btn-sm">Preparar Pedido</button>`
             }
             if (data.idpedidostatus == 3) {
-                document.querySelector('#container-action-footer').innerHTML = `<button onclick="pedido.method.moverPara(4, '${idpedido}')" type="button" class="btn btn-yellow btn-sm">Entregar Pedido</button>`
+                document.querySelector('#container-action-footer').innerHTML += `<button onclick="pedido.method.moverPara(4, '${idpedido}')" type="button" class="btn btn-yellow btn-sm">Entregar Pedido</button>`
             }
             if (data.idpedidostatus == 4) {
-                document.querySelector('#container-action-footer').innerHTML = `<button onclick="pedido.method.moverPara(5, '${idpedido}')" type="button" class="btn btn-yellow btn-sm">Concluir Pedido</button>`
+                document.querySelector('#container-action-footer').innerHTML += `<button onclick="pedido.method.moverPara(5, '${idpedido}')" type="button" class="btn btn-yellow btn-sm">Concluir Pedido</button>`
             }
 
         }
@@ -506,6 +508,57 @@ pedido.method = {
             );
 
         }
+
+    },
+
+    // imprimir o pedido
+    imprimir: () => {
+
+        // mostra o loader
+        app.method.loading(true);
+
+        // Coloca a classe de print
+        $("#content-print").addClass('print');
+
+        // Obtém o elemento a ser impresso
+        const div = document.getElementById('content-print');
+        
+        html2canvas(div).then(function (canvas) {
+            
+            // remove a classe de print
+            $("#content-print").removeClass('print');
+
+            // Criar um novo elemento <img> com o conteúdo do canvas
+            const imagem = canvas.toDataURL(); // Obter a URL da imagem
+            const novaJanela = window.open('', '_blank'); // Abrir uma nova janela
+            novaJanela.document.write(`
+                <html>
+                    <head>
+                        <title>Impressão</title>
+                    </head>
+                    <body style="margin: 0; padding: 0; text-align: center;">
+                        <img src="${imagem}" style="max-width: 100%; height: auto;"/> 
+                    </body>
+                </html>
+            `);
+
+            // Aguarde o carregamento completo da nova janela e acione a impressão
+            novaJanela.document.close(); // Fecha o fluxo de escrita
+
+            // remove o loader
+            app.method.loading(false);
+
+            setTimeout(function() {
+                novaJanela.focus(); // Garante que a janela está ativa
+                novaJanela.print(); // Abre a tela de impressão
+                setTimeout(function() {
+                    novaJanela.close(); // Fecha a tela depois de cancelar ou imprimir
+                }, 100)
+            }, 100); // Delay para o conteudo de impressão carregar
+
+        }).catch(function (error) {
+            console.error('Erro ao capturar a div:', error);
+        });
 
     },
 

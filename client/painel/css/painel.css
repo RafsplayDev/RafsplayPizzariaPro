@@ -777,3 +777,29 @@ input:checked + .slider::before {
 #card-grafico-dias-semana {
     height: 520px;
 }
+
+/* Impressão */
+
+#container-action-footer {
+    justify-content: space-between;
+}
+
+.print * {
+    background: #FFF !important;
+    color: #000!important;
+}
+
+.print .card {
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0px !important;
+    padding: 0px !important; 
+}
+
+.print .container-dados-pedido {
+    border-bottom: 1px solid #000;
+}
+
+.print .footer-btn {
+    display: none!important;
+}
