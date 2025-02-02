@@ -159,17 +159,30 @@ section.categoria {
 }
 
 .container-menu {
-    margin-bottom: 30px;
+    display: flex;
     overflow-x: auto;
     overflow-y: hidden;
-    display: flex;
-    padding-bottom: 5px;
-    padding-top: 5px;
-    padding-left: 10px;
+    white-space: nowrap;
+    padding: 5px;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
 }
 
+/* Esconde a barra de rolagem para Chrome, Safari e Opera */
+.container-menu::-webkit-scrollbar {
+    display: none;
+}
+
+/* Ajuste para os itens de categoria */
 .item-categoria {
-    flex: none;
+    flex: 0 0 auto; /* Impede que os itens encolham ou cresçam */
+    display: inline-flex; /* Mantém os itens em linha */
+    align-items: center;
+}
+
+/* Mantém o último item com uma margem à direita para melhor visualização no scroll */
+.item-categoria:last-child {
+    margin-right: 10px;
 }
 
 .btn-white {
@@ -802,5 +815,64 @@ textarea {
 input[disabled] {
     cursor: not-allowed;
     opacity: 0.6;
+}
+
+/* Estilos para o sistema de busca */
+.search-container {
+    flex: 1 0 auto; /* Permite que cresça mas não encolha */
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    transform-origin: left;
+    transition: all 0.3s ease-in-out;
+    transform: scaleX(0);
+    opacity: 0;
+    width: 0;
+}
+
+.search-container.show {
+    transform: scaleX(1);
+    opacity: 1;
+    width: auto;
+}
+
+.search-container .form-control {
+    height: 42px;
+    margin: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-close-search {
+    padding: 8px 15px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease-in-out;
+    border: none;
+    border-radius: 15px;
+    background: none;
+    color: var(--color-black);
+}
+
+#btnPesquisar {
+    padding: 8px 15px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease-in-out;
+    border: none;
+    border-radius: 15px;
+}
+
+/* Ajuste para quando a pesquisa estiver ativa */
+.container-menu.searching #listaCategorias {
+    display: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.container-menu.searching .search-container {
+    display: flex;
 }
 

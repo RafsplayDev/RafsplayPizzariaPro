@@ -48,8 +48,21 @@
     </header>
 
     <section class="categoria width-fix mt-4">
-        <div class="container-menu" id="listaCategorias">
+        <div class="container-menu">
+            <div class="item-categoria me-2">
+                <button class="btn-white mb-3" id="btnPesquisar">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <div class="search-container mb-3 hidden" id="searchContainer">
+                <input type="text" class="form-control" id="searchInput" placeholder="Buscar item...">
+                <button class="btn-white btn-close-search" id="btnFecharPesquisa">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="listaCategorias">
 
+            </div>
         </div>
     </section>
 
@@ -80,6 +93,7 @@
     <script type="text/javascript" src="./js/app.js"></script>
     <script type="text/javascript" src="./painel/js/icones-categoria.js"></script>
     <script type="text/javascript" src="./js/cardapio.js"></script>
+    <script type="text/javascript" src="./js/search.js"></script>
     
 </body>
 </html>
