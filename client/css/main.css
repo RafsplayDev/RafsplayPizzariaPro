@@ -15,7 +15,7 @@
     --color-text-out: #90908e;
     --color-primary: #ba8333;
     --color-primary-out: #3a3a3a;
-    --color-secondary: #1c1c1c;
+    --color-secondary: #1a1a1a;
     --color-white: #ffffff;
     --color-red: #e74c3c;
     --color-green: #2ecc71;
@@ -184,7 +184,7 @@ section.categoria {
 .btn-yellow {
     border: none!important;
     background-color: var(--color-primary);
-    color: var(--color-white)!important;
+    color: var(--color-secondary)!important;
     border-radius: 20px;
     padding: 15px 25px;
     font-size: 20px;
@@ -209,7 +209,7 @@ section.categoria {
 
 .btn-white:hover, .btn-white.active {
     background-color: var(--color-primary);
-    color: var(--color-white);
+    color: var(--color-black);
 }
 
 .title-categoria {
@@ -278,7 +278,7 @@ section.categoria {
 
 .menu-bottom-item {
     text-decoration: none!important;
-    color: var(--color-text-out) !important;
+    color: var(--color-primary) !important;
     font-size: 14px;
     flex: 1;
     text-align: center;
@@ -297,7 +297,7 @@ section.categoria {
     width: 21px;
     height: 21px;
     background-color: var(--color-primary);
-    color: var(--color-white);
+    color: var(--color-black);
     border-radius: 50px;
     font-size: 12px;
     font-weight: bold;
@@ -470,7 +470,7 @@ textarea {
 }
 
 .btn-menos, .btn-mais {
-    color: var(--color-black);
+    color: var(--color-white);
     padding: 8px 12px;
     border-radius: 10px;
     font-size: 14px;
@@ -479,7 +479,7 @@ textarea {
 }
 
 .add-numero-itens {
-    color: var(--color-black);
+    color: var(--color-white);
     padding: 2px 15px;
     font-size: 18px;
 }
@@ -670,10 +670,11 @@ textarea {
     padding-left: 15px;
     padding-right: 15px;
     font-size: 14px;
+    color: var(--color-black);
 }
 
 .card-status-pedido .infos .name {
-    color: var(--color-black);
+    color: var(--color-secondary);
 }
 
 .detalhes-produto {
@@ -711,7 +712,7 @@ textarea {
 }
 
 .card-status-pedido.active {
-    background-color: var(--color-primary-out);
+    background-color: var(--color-primary);
 }
 
 .img-icon-details.status {
