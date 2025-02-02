@@ -279,6 +279,14 @@ pedido.method = {
             document.querySelector('#container-endereco').classList.remove('hidden');
             document.querySelector('#lblEndereco').innerText = `${data.endereco}, ${data.numero}, ${data.bairro} ${data.complemento ? ` - ${data.complemento}` : ''}`;
             document.querySelector('#lblCep').innerText = `${data.cidade}-${data.estado} / ${data.cep}`;
+            
+            // Cria URL formatada para o Google Maps
+            const enderecoFormatado = encodeURIComponent(`${data.endereco}, ${data.numero} - ${data.bairro}, ${data.cidade} - ${data.estado}, ${data.cep}`);
+            const urlMaps = `https://www.google.com/maps/place/${enderecoFormatado}`;
+            
+            // Atualiza o link com a URL correta e torna clicável
+            document.querySelector('#linkEndereco').href = urlMaps;
+            document.querySelector('#linkEndereco').target = '_blank';
         }   
         else {
             document.querySelector('#container-endereco').classList.add('hidden');

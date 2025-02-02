@@ -269,6 +269,10 @@ h1.title-page {
     height: 140px;
 }
 
+#linkEndereco {
+    color: var(--color-primary);
+}
+
 /* Modal detalhes */
 
 .modal-content {
@@ -803,3 +807,4 @@ input:checked + .slider::before {
 .print .footer-btn {
     display: none!important;
 }
+
