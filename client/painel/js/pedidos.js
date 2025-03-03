@@ -1,11 +1,13 @@
-
 var pedido = {};
 
 var MODAL_DETALHES = new bootstrap.Modal(document.getElementById('modalDetalhes'));
 var MODAL_RECUSA_PEDIDO = new bootstrap.Modal(document.getElementById('modalRecusarPedido'));
 
-var RECUSAR_PEDIDO_ID = 0
+var RECUSAR_PEDIDO_ID = 0;
 
+// Som de notificação para novos pedidos
+var SOM_NOTIFICACAO = new Audio('/audio/notificacao.mp3');
+var TOTAL_PEDIDOS_ANTERIOR = 0;
 
 pedido.event = {
 
@@ -14,11 +16,19 @@ pedido.event = {
         app.method.validaToken();
         app.method.carregarDadosEmpresa();
 
+        // Reseta o contador quando inicializa o painel
+        TOTAL_PEDIDOS_ANTERIOR = 0;
+
         pedido.method.openTab('pendentes', 1);
 
         setInterval(() => {
             pedido.method.atualizarLista();
         }, 10000);
+
+        // Adiciona evento para resetar o contador quando a página for fechada/recarregada
+        window.addEventListener('beforeunload', () => {
+            TOTAL_PEDIDOS_ANTERIOR = 0;
+        });
 
     }
 
@@ -50,6 +60,17 @@ pedido.method = {
                 pedido.method.carregarPedidos(response.data);
 
                 pedido.method.carregarTotais(response.totais);
+
+                // Verifica se chegou algum pedido novo e toca o som de notificação
+                if (TOTAL_PEDIDOS_ANTERIOR > 0 && response.totais.pendente > TOTAL_PEDIDOS_ANTERIOR) {
+                    SOM_NOTIFICACAO.play();
+                }
+
+                // Atualiza o contador com proteção contra crescimento excessivo
+                TOTAL_PEDIDOS_ANTERIOR = response.totais.pendente;
+                if (TOTAL_PEDIDOS_ANTERIOR >= LIMITE_CONTADOR) {
+                    TOTAL_PEDIDOS_ANTERIOR = 1; // Reseta para 1 para manter a lógica de comparação
+                }
 
             },
             (error) => {
