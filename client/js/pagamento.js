@@ -127,8 +127,8 @@ pagamento.method = {
                 style: {
                   theme: "default",
                   customVariables: {
-                    baseColor: '#ffbf00',
-                    baseColorSecondVariant: '#ffda6f',
+                    baseColor: '#ba8333',
+                    baseColorSecondVariant: '#1a1a1a',
                     buttonTextColor: '#000000'
                   }
                 },
