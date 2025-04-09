@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Panel Pro</title>
+
+        <link rel="stylesheet" href="./css/bootstrap.min.css" />
+        <link rel="stylesheet" href="./css/fontawesome.css" />
+        <link rel="stylesheet" href="./css/animate.css" />
+        <link rel="stylesheet" href="./css/main.css" />
+
+    </head>
+    <body>
+
+        <div class="loader-full hidden">
+            <img src="./img/loader.png" width="100" />
+        </div>
+
+        <div class="bg-top pagamento"></div>
+
+        <header class="width-fix mt-3">
+            <div class="card">
+
+                <div class="d-flex">
+
+                    <a href="./carrinho.html" class="container-voltar">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <div class="infos text-center">
+                        <h1 class="mb-0"><b>Pagamento online</b></h1>
+                    </div>
+
+                </div>
+
+            </div>
+        </header>
+
+        <section class="carrinho width-fix mt-4 mb-4">
+            <div class="card mb-2">
+                <div class="detalhes-produto">
+                    <div class="infos-produto">
+                        <p class="name-total mb-0"><b>Total a pagar</b></p>
+                        <p class="price-total mb-0"><b id="lblTotalCarrinho"></b></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="width-fix mt-4 mb-4">
+            <div id="paymentBrick_container"></div>
+
+            <div class="mt-5 mb-0 text-center">
+                <p><i class="fas fa-lock"></i>&nbsp; Compra segura com</p>
+                <img src="img/logo-mercadopago.png" style="width: 100px; filter: grayscale(1); opacity: 0.8;" />
+            </div>
+        </section>
+
+
+
+        <script type="text/javascript" src="./js/bootstrap.bundle.min.js"></script>
+        <script type="text/javascript" src="./js/app.js"></script>
+        <script src="https://sdk.mercadopago.com/js/v2"></script>
+        <script type="text/javascript" src="./js/pagamento.js"></script>
+
+    </body>
+</html>
+

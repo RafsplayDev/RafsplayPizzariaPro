@@ -313,6 +313,7 @@
                             <p class="title-categoria mb-0">
                                 <b>Selecione as formas de <b class="color-primary">pagamento na entrega</b></b>
                             </p>
+                            <span class="sub-title-categoria">* Selecione <b>pelo menos 1 forma de pagamento</b> para seu cardápio funcionar corretamente.</span>
 
                             <div class="container-group mb-3">
                                 <div class="card card-address cursor-default mt-3">
@@ -377,8 +378,9 @@
                             <p class="title-categoria mb-0 mt-5">
                                 <b>Formas de <b class="color-primary">pagamento via aplicativo</b></b>
                             </p>
+                            <span class="sub-title-categoria">* Se essa opção estiver selecionada, <b>somente o Pagamento Online será mostrado</b> ao cliente.</span>
 
-                            <div class="container-group mb-3 opacity-05">
+                            <!-- <div class="container-group mb-3 opacity-05">
                                 <div class="card card-address cursor-default mt-3">
                                     <div class="img-icon-details">
                                         <i class="fas fa-mobile-alt"></i>
@@ -387,6 +389,47 @@
                                         <p class="name mb-1"><b>Em construção...</b></p>
                                         <span class="text mb-0">Esta função será liberada em breve.</span>
                                     </div>
+                                </div>
+                            </div> -->
+
+                            <div class="container-group mb-1">
+                                <div class="card card-address cursor-default mt-3">
+                                    <div class="img-icon-details">
+                                        <i class="fas fa-mobile-alt"></i>
+                                    </div>
+                                    <div class="infos">
+                                        <p class="name mb-1"><b>Pagamento online</b></p>
+                                        <span class="text mb-0">Pagar com Pix e Cartão de Crédito</span>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" id="chkFormaPagamento-pagamentoonline" onchange="config.method.changeOpcaoFormaPagamento(5, 'pagamentoonline')" />
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="container-group mb-3 hidden" id="container-config-mp">                              
+                                <div class="card card-address cursor-default">
+                                    <div class="img-icon-details">
+                                        <img src="../img/mp-logo.svg" />
+                                    </div>
+                                    <div class="infos">
+                                        <p class="name mb-1"><b>Configurações do Mercado Pago:</b></p>
+                                        <a class="text mb-0" href="https://www.mercadopago.com.br/developers/panel/app" target="_blank">Obter configurações do Mercado Pago</a>
+                                    </div>
+                                    <div class="tempo">
+                                        <div class="form-group">
+                                            <label for="txtPublicKey"><b>Public Key</b></label>
+                                            <input id="txtPublicKey" type="text" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="txtAccessToken"><b>Access Token</b></label>
+                                            <input id="txtAccessToken" type="text" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <a class="btn btn-yellow btn-sm ms-4" onclick="config.method.salvarConfigMP()">
+                                        <i class="fas fa-check"></i>&nbsp; Salvar
+                                    </a>
                                 </div>
                             </div>
 

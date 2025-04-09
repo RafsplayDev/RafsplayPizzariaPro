@@ -36,11 +36,13 @@ const controllers = () => {
             var ComandoSql = await readCommandSql.restornaStringSql('obterTodasFormasPagamento', 'formapagamento');
             var result = await db.Query(ComandoSql);
 
-            console.log('obterTodasFormasPagamento', result)
+            var ComandoSqlConfig = await readCommandSql.restornaStringSql('obterConfigMP', 'formapagamento');
+            var resultConfig = await db.Query(ComandoSqlConfig);
 
             return {
                 status: 'success',
-                data: result
+                data: result,
+                config: resultConfig[0]
             }
             
         } catch (error) {
@@ -78,11 +80,34 @@ const controllers = () => {
         
     }
 
+    const salvarConfigMP = async (req) => {
+        
+        try {
+
+            var ComandoSql = await readCommandSql.restornaStringSql('salvarConfigMP', 'formapagamento');
+            await db.Query(ComandoSql, req.body);
+
+            return {
+                status: 'success',
+                message: 'Configuração atualizada.'
+            }
+            
+        } catch (error) {
+            console.log(error);
+            return {
+                status: 'error',
+                message: 'Falha ao atualizar a configuração.'
+            }
+        }
+        
+    }
+
 
     return Object.create({
         obterFormasPagamentoAtivas
         , obterTodasFormasPagamento
         , ativarFormaPagamento
+        , salvarConfigMP
     })
 
 }

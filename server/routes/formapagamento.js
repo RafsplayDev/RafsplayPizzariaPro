@@ -22,4 +22,10 @@ module.exports = (server) => {
         res.send(result);
     })
 
+    // salva as configurações do Mercado Pago
+    server.post('/formapagamento/salvar/mercadopago', Acesso.verificaTokenAcesso, async (req, res) => {
+        const result = await ct.controllers().salvarConfigMP(req);
+        res.send(result);
+    })
+
 }

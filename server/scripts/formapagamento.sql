@@ -28,3 +28,29 @@ WHERE
     idformapagamento = @idformapagamento
 
 --END#ativarFormaPagamento#
+
+
+--INIT#obterConfigMP#
+
+SELECT 
+	publickey
+    , accesstoken
+FROM 
+	mercadopagoconfig
+WHERE
+	idempresa = 1
+
+--END#obterConfigMP#
+
+
+--INIT#salvarConfigMP#
+
+UPDATE
+    mercadopagoconfig
+SET
+	publickey = @publicKey,
+    accesstoken = @accessToken
+WHERE
+	idempresa = 1
+
+--END#salvarConfigMP#

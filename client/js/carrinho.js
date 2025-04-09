@@ -17,6 +17,8 @@ var TROCO = 0;
 
 var MODAL_ENDERECO = new bootstrap.Modal(document.getElementById('modalEndereco'));
 
+var PAGAMENTO_ONLINE = false;
+
 carrinho.event = {
 
     init: () => {
@@ -725,6 +727,27 @@ carrinho.method = {
 
         if (list.length > 0) {
 
+            // antes, valida se tem a forma de pagamento online ativa
+            let pagamentoonline = list.filter((e) => { return e.idformapagamento === 5 });
+
+            // existe pagamento online
+            if (pagamentoonline.length > 0) {
+
+                // oculta a opção de 'Como prefere pagar'
+                document.getElementById('container-como-pagar').classList.add('hidden');
+                document.getElementById('lblFazerPedido').innerText = 'Realizar Pagamento';
+                PAGAMENTO_ONLINE = true;
+
+            }
+            else {
+
+                // exibe a opção de como prefere pagar
+                document.getElementById('container-como-pagar').classList.remove('hidden');
+                document.getElementById('lblFazerPedido').innerText = 'Fazer Pedido';
+                PAGAMENTO_ONLINE = false;
+
+            }
+
             list.forEach((e, i) => {
 
                 let temp = `<a href="#!" onclick="carrinho.method.selecionarFormaPagamento('${e.idformapagamento}')">${e.nome}</a>`
@@ -865,14 +888,6 @@ carrinho.method = {
                 return;
             }
 
-            if (FORMA_SELECIONADA == null) {
-                app.method.mensagem("Selecione a forma de pagamento.");
-                return;
-            }
-
-            // tudo ok, faz o pedido
-            app.method.loading(true);
-
             var dados = {
                 entrega: checkEntrega,
                 retirada: checkRetirada,
@@ -881,11 +896,37 @@ carrinho.method = {
                 idtaxaentregatipo: TAXAS_ENTREGA[0].idtaxaentregatipo,
                 idtaxaentrega: TAXA_ATUAL_ID,
                 taxaentrega: TAXA_ATUAL,
-                idformapagamento: FORMA_SELECIONADA.idformapagamento,
                 troco: TROCO,
                 nomecliente: nome,
                 telefonecliente: celular
             }
+
+            // se for pagamento online
+            if (PAGAMENTO_ONLINE) {
+
+                // seta a forma de pagamento
+                dados.idformapagamento = 5;
+
+                // salva a sub order (antes da order) para obter os dados mais tarde
+                app.method.gravarValorSessao(JSON.stringify(dados), 'sub-order');
+
+                // avança para a próxima página para selecionar a forma de pagamento
+                window.location.href = '/pagamento.html'
+
+            }
+            else {
+
+                // se não for, continua o fluxo normal
+
+                if (FORMA_SELECIONADA == null) {
+                    app.method.mensagem("Selecione a forma de pagamento.");
+                    return;
+                }
+
+                dados.idformapagamento = FORMA_SELECIONADA.idformapagamento;
+
+                // tudo ok, faz o pedido
+                app.method.loading(true);
 
             app.method.post('/pedido', JSON.stringify(dados),
                 (response) => {
@@ -917,6 +958,9 @@ carrinho.method = {
                     app.method.loading(false);
                 }, true
             );
+
+
+            }
 
         }
         else {
